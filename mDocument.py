@@ -1,9 +1,10 @@
-
 'Factory Functions'
+
 
 def create():
     """Create new document"""
     return Document(status=Document.New)
+
 
 def load(id):
     """Load document from Database"""
@@ -11,15 +12,17 @@ def load(id):
     Doc.restore()
     return Doc
 
+
 class Document(object):
     """This is persistend object. It should have methods
        save and restore at least"""
     New = 1
     Status_Allowed = [New]
+
     def __init__(self, **kwargs):
         if 'id' in kwargs:
             self.__Id = int(kwargs['id'])
-        if 'status' in  kwargs:
+        if 'status' in kwargs:
             if kwargs['status'] not in Document.Status_Allowed:
                 raise ValueError
             self.__Status = kwargs['status']
@@ -38,6 +41,7 @@ class Document(object):
         return self.__Id
     id =property(getId)
     """
+
     @property
     def status(self):
         return self.__Status
@@ -47,13 +51,14 @@ class Document(object):
         try:
             return self.status
         except AttributeError:
-            return None 
+            return None
 
     def save(self):
         pass
 
     def restore(self):
-        pass   
+        pass
+
 
 if __name__ == '__main__':
     D = create()
@@ -63,16 +68,16 @@ if __name__ == '__main__':
     except AttributeError:
         print('<NONE>')
     try:
-        print('ID     =',  D.id)
+        print('ID     =', D.id)
     except AttributeError:
         print('<NONE>')
 
-    D = load(id = '123')
+    D = load(id='123')
     try:
         print('Status = ', D.status)
     except AttributeError:
         print('<NONE>')
     try:
-        print('ID     =',  D.id)
+        print('ID     =', D.id)
     except AttributeError:
         print('<NONE>')
