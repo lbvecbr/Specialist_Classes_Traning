@@ -1,5 +1,7 @@
 class NakPosition(object):
     def __init__(self):
+        #TODO: 1. Конструктор должен принимать необязательные параметры
+        #       id, title, unit, amount, price, summa
         pass
 
     id = property(lambda self: self.__Id)

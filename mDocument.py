@@ -1,3 +1,7 @@
+import sqlite3
+import os
+
+
 'Factory Functions'
 
 
@@ -20,6 +24,8 @@ class Document(object):
     Status_Allowed = [New]
 
     def __init__(self, **kwargs):
+        # TODO: 1. Запомнить значения остальных параметров,
+        # TODO:    но никак их не обрабатывать
         if 'id' in kwargs:
             self.__Id = int(kwargs['id'])
         if 'status' in kwargs:
@@ -29,18 +35,18 @@ class Document(object):
 
     id = property(lambda self: self.__Id)
 
+    """ This is the same 
+    def getId(self):
+        return self.__Id
+    id =property(getId)
+    """
+
     @property
     def _id(self):
         try:
             return self.id
         except AttributeError:
             return None
-
-    """ This is the same 
-    def getId(self):
-        return self.__Id
-    id =property(getId)
-    """
 
     @property
     def status(self):
@@ -59,8 +65,28 @@ class Document(object):
     def restore(self):
         pass
 
+    @classmethod
+    def create_table(self):
+         # TODO: 1. Автоматически вычислять SQL-комманду создания таблицы
+        conn = sqlite3.connect(os.path.expanduser('~/data.db'))
+        curr = conn.cursor()
+        curr.execute(
+            """
+            create table t_document(
+            -- TODO: 1. Сделать возможность сохранение в базе
+            -- TODO:         дополнительных параметров
+            i_id      integer  not null primary key autoincrement,
+            f_status  integer  null
+            );
+            """
+        )
+        conn.commit()
+        conn.close()
+        print("Creating documents table")
+
 
 if __name__ == '__main__':
+    Document.create_table()
     D = create()
     D = load(id=1)
     try:

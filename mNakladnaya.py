@@ -23,6 +23,7 @@ class Nakladnaya(mDocument.Document):
 
     def __len__(self):
         return len(self.__Positions)
+
     # __len__ = lambda self: len(self.__Positions)
 
     def __getitem__(self, index):
@@ -33,6 +34,9 @@ class Nakladnaya(mDocument.Document):
             yield position
 
     def append_blank(self):
+        #TODO: 1. Функция должна принимать параметры, соответвтвующие
+        #         параметрам конструктора класса NakPos,
+        #         и добавлять в накладную позицию с этмим параметрами.
         self.__Positions.append(mNakPos.NakPosition())
 
     def append(self, position):
